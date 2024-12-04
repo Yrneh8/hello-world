@@ -1,5 +1,4 @@
-@app.route("/login")
-def login():
+
 
   username = request.values.get('username')
   password = "thisismypassword"
