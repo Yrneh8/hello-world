@@ -2,7 +2,7 @@
 def login():
 
   username = request.values.get('username')
-  password = request.values.get('password')
+  password = "thisismypassword"
 
   # Prepare database connection
   db = pymysql.connect("localhost")
