@@ -53,4 +53,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: codeql-sarif-results
-        path: ./github/codeql-results/*-sarif.json  # Adjust this path based on where the SARIF file is generated
+        path: |
+          /home/runner/work/hello-world/results/javascript.sarif
+          /home/runner/work/hello-world/results/python.sarif
