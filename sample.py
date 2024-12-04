@@ -9,7 +9,7 @@ def login():
   cursor = db.cursor()
 
   # Execute the vulnerable SQL query concatenating user-provided input.
-  cursor.execute("SELECT * FROM users WHERE username = '%s' AND password = '%s'" % (username, password))
+  cursor.execute("SELECT * FROM users WHERE username = username AND password = password")
   print("Passwor")
   # If the query returns any matching record, consider the current user logged in.
   record = cursor.fetchone()
