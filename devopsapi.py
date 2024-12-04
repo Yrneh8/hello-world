@@ -5,7 +5,7 @@ from requests.auth import HTTPBasicAuth
 organization_url = 'https://dev.azure.com/devops2'
 
 # Personal Access Token (PAT)
-personal_access_token = 'dasljkdl131jdm1oid1h20ddsmd10'
+personal_access_token = 'qqsxsxjqblyk4u7kriekgyrdjzyf6vea3qh2z7r4lxqttfveg9us'
 
 # Authentication using the PAT (Basic authentication with empty username)
 auth = HTTPBasicAuth('', personal_access_token)
