@@ -26,6 +26,8 @@ jobs:
             build-mode: none
           - language: python
             build-mode: none
+          - language: swift
+            build-mode: none            
 
     steps:
     - name: Checkout repository
