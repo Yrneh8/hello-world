@@ -27,7 +27,7 @@ jobs:
           - language: python
             build-mode: none
           - language: swift
-            build-mode: none  # No build step for Swift
+            build-mode: manual  # Manual build mode for Swift (skipping compilation)
 
     steps:
     - name: Checkout repository
@@ -39,13 +39,7 @@ jobs:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
 
-    # No build step for Swift. Remove or comment out this block.
-    # - name: Build Swift code manually
-    #   if: matrix.language == 'swift'
-    #   run: |
-    #     echo "Compiling Swift files..."
-    #     swiftc -o myapp $(find . -name "*.swift")
-
+    # Static analysis without compilation
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
