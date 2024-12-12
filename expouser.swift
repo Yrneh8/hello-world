@@ -17,5 +17,4 @@ class Person {
 // Creating an instance of Person
 let person = Person(name: "John", age: 25)
 
-// Calling the greet method
-person.greet()
+
