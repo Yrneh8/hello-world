@@ -51,5 +51,4 @@ func fetchAzureDevOpsProjects() {
 }
 
 
-// Call main() function to start the program execution
-main()
+
