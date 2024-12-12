@@ -45,7 +45,9 @@ jobs:
       run: |
         echo "Compiling Swift files..."
         # Compile all Swift files in the repository (or specify a directory)
-        swiftc -emit-object -o output-directory/ -c *.swift  # This assumes all Swift files are in the root. Adjust if they are in subfolders.
+        for file in path/to/swift/files/*.swift; do
+        swiftc -emit-object -c "$file" -o output-directory/"$(basename "$file" .swift).o"
+        done
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
