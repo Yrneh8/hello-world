@@ -17,7 +17,7 @@ func getProjects() {
     request.httpMethod = "GET"
     
     // Add Authorization header with the Personal Access Token
-    let authValue = "Basic \(Data(":" + personalAccessToken).base64EncodedString())"
+    let authValue = "Basic " + Data((":".utf8) + personalAccessToken.data(using: .utf8)!).base64EncodedString()
     request.setValue(authValue, forHTTPHeaderField: "Authorization")
     
     // Start the network request
@@ -42,8 +42,11 @@ func getProjects() {
     task.resume()
 }
 
-// Call the function to get the projects
-getProjects()
+// Entry point to start the function and keep the program running
+func main() {
+    getProjects()
+    RunLoop.main.run()
+}
 
-// Keep the program running to wait for the async response
-RunLoop.main.run()
+// Call the main function
+main()
