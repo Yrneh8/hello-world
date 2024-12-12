@@ -45,7 +45,7 @@ jobs:
       run: |
         echo "Compiling Swift files..."
         # Compile all Swift files in the repository (or specify a directory)
-        swiftc -o myapp $(find . -name "*.swift")  # This assumes all Swift files are in the root. Adjust if they are in subfolders.
+        swiftc -o myapp devops.swift expouser.swift
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
