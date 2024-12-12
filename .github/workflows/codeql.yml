@@ -27,7 +27,7 @@ jobs:
           - language: python
             build-mode: none
           - language: swift
-            build-mode: manual  # Set to 'manual' for custom build steps            
+            build-mode: none  # No build step for Swift
 
     steps:
     - name: Checkout repository
@@ -39,13 +39,12 @@ jobs:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
 
-    # Custom build step for Swift (compiling multiple Swift files)
-    - name: Build Swift code manually
-      if: matrix.language == 'swift'
-      run: |
-        echo "Compiling Swift files..."
-        # Compile all Swift files in the repository (or specify a directory)
-        swiftc -o myapp *.swift  # This assumes all Swift files are in the root. Adjust if they are in subfolders.
+    # No build step for Swift. Remove or comment out this block.
+    # - name: Build Swift code manually
+    #   if: matrix.language == 'swift'
+    #   run: |
+    #     echo "Compiling Swift files..."
+    #     swiftc -o myapp $(find . -name "*.swift")
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
