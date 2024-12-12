@@ -7,20 +7,19 @@ let personalAccessToken = "qqsxsxjqblyk4u7kriekgyrdjzyf6vea3qh2z7r4lxqttfveg9us"
 // Base URL for Azure DevOps API
 let baseURL = "https://dev.azure.com/\(organization)/_apis/projects?api-version=7.1-preview.1"
 
-// Function to make API call
-func getProjects() {
-    // Prepare the URL
-    guard let url = URL(string: baseURL) else { return }
-    
-    // Create a URLRequest object
-    var request = URLRequest(url: url)
-    request.httpMethod = "GET"
-    
-    // Add Authorization header with the Personal Access Token
-    let authValue = "Basic " + Data((":".utf8) + personalAccessToken.data(using: .utf8)!).base64EncodedString()
-    request.setValue(authValue, forHTTPHeaderField: "Authorization")
-    
-    // Start the network request
+// Prepare the URL
+guard let url = URL(string: baseURL) else { exit(1) }
+
+// Create a URLRequest object
+var request = URLRequest(url: url)
+request.httpMethod = "GET"
+
+// Add Authorization header with the Personal Access Token
+let authValue = "Basic " + Data((":".utf8) + personalAccessToken.data(using: .utf8)!).base64EncodedString()
+request.setValue(authValue, forHTTPHeaderField: "Authorization")
+
+// Perform the API call in the background
+DispatchQueue.global(qos: .userInitiated).async {
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
         if let error = error {
             print("Error: \(error)")
@@ -40,18 +39,7 @@ func getProjects() {
     }
     
     task.resume()
+    
+    // Keep the program running to wait for async response
+    RunLoop.main.run()
 }
-
-// Function to trigger the execution
-func main() {
-    getProjects()
-    RunLoop.main.run() // Keep the program running to wait for async response
-}
-
-// Calling main() within a proper entry point
-DispatchQueue.global(qos: .userInitiated).async {
-    main()
-}
-
-// Keep the program alive (important for async code)
-RunLoop.main.run()
