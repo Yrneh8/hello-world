@@ -42,11 +42,16 @@ func getProjects() {
     task.resume()
 }
 
-// Entry point to start the function and keep the program running
+// Function to trigger the execution
 func main() {
     getProjects()
-    RunLoop.main.run()
+    RunLoop.main.run() // Keep the program running to wait for async response
 }
 
-// Call the main function
-main()
+// Calling main() within a proper entry point
+DispatchQueue.global(qos: .userInitiated).async {
+    main()
+}
+
+// Keep the program alive (important for async code)
+RunLoop.main.run()
