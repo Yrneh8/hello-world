@@ -50,12 +50,6 @@ func fetchAzureDevOpsProjects() {
     }
 }
 
-// Ensure the function is called within a valid scope
-// Place the function call inside the main entry point, or inside a function that gets called in your program.
-
-func main() {
-    fetchAzureDevOpsProjects()
-}
 
 // Call main() function to start the program execution
 main()
