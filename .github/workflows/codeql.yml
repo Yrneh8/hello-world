@@ -27,7 +27,10 @@ jobs:
           - language: python
             build-mode: none
           - language: swift
-            build-mode: manual  # Set to 'manual' for custom build steps            
+            build-mode: manual  # Set to 'manual' for custom build steps
+          - language: ruby
+            build-mode: autobuild             
+
 
     steps:
     - name: Checkout repository
