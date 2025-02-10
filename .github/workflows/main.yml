@@ -43,10 +43,14 @@ jobs:
           cat $RETIREJS_OUTPUT_DIR/scan_results.json
           
 
-      - name: Print all detected vulnerabilities
+      - name: Check if vulnerabilities were found
         run: |
-          echo "Detected vulnerabilities:"
-          jq '.[] | {package: .package, version: .version, url: .url, severity: .severity}' $RETIREJS_OUTPUT_DIR/scan_results.json
+          if [ $(jq '.data | length' $RETIREJS_OUTPUT_DIR/scan_results.json) -gt 0 ]; then
+            echo "Vulnerabilities found!"
+          else
+            echo "No vulnerabilities found."
+          fi
+
 
       - name: Fail the job if vulnerabilities are found
         run: |
