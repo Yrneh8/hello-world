@@ -38,6 +38,11 @@ jobs:
           retire --outputformat json --outputpath $RETIREJS_OUTPUT_DIR/scan_results.json
           cat $RETIREJS_OUTPUT_DIR/scan_results.json
 
+      - name: Debug scan results
+        run: |
+          cat $RETIREJS_OUTPUT_DIR/scan_results.json
+          
+
       - name: Print all detected vulnerabilities
         run: |
           echo "Detected vulnerabilities:"
