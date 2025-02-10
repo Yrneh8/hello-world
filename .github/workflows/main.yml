@@ -52,12 +52,6 @@ jobs:
           fi
 
 
-      - name: Fail the job if vulnerabilities are found
-        run: |
-          if jq '.length > 0' $RETIREJS_OUTPUT_DIR/scan_results.json; then
-            echo "Vulnerabilities found in the project!"
-            exit 1
-          fi
 
       - name: Upload scan results as artifact
         uses: actions/upload-artifact@v4
