@@ -1,0 +1,57 @@
+name: Retire.js Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      RETIREJS_VERSION: "5.0.0"
+      RETIREJS_OUTPUT_DIR: "retirejs_results"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Retire.js
+        run: |
+          echo "Setting up Retire.js version $RETIREJS_VERSION"
+          npm install -g retire@${RETIREJS_VERSION}
+
+      - name: Create output directory
+        run: mkdir -p $RETIREJS_OUTPUT_DIR
+
+      - name: Run Retire.js and scan project
+        run: |
+          retire --outputformat json --outputpath $RETIREJS_OUTPUT_DIR/scan_results.json
+          cat $RETIREJS_OUTPUT_DIR/scan_results.json
+
+      - name: Fail the job if vulnerabilities are found
+        run: |
+          if jq '.length > 0' $RETIREJS_OUTPUT_DIR/scan_results.json; then
+            echo "Vulnerabilities found in the project!"
+            exit 1
+          fi
+
+      - name: Upload scan results as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: retirejs-scan-results
+          path: $RETIREJS_OUTPUT_DIR/scan_results.json
+
+    # Optional step after job completes
+    post:
+      - name: Notify completion
+        run: echo "Retire.js scan completed!"
