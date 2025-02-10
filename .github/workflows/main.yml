@@ -51,7 +51,4 @@ jobs:
           name: retirejs-scan-results
           path: $RETIREJS_OUTPUT_DIR/scan_results.json
 
-    # Optional step after job completes
-    post:
-      - name: Notify completion
-        run: echo "Retire.js scan completed!"
+
