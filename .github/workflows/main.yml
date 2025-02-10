@@ -35,23 +35,28 @@ jobs:
 
       - name: Run Retire.js and scan project
         run: |
-          retire --outputformat json --outputpath $RETIREJS_OUTPUT_DIR/scan_results.json
-          cat $RETIREJS_OUTPUT_DIR/scan_results.json
+          retire --outputformat json --outputpath "$RETIREJS_OUTPUT_DIR/scan_results.json"
+          echo "Scan results written to: $RETIREJS_OUTPUT_DIR/scan_results.json"
+          cat "$RETIREJS_OUTPUT_DIR/scan_results.json"
 
-      - name: Debug scan results
+      - name: Verify the output directory exists
         run: |
-          cat $RETIREJS_OUTPUT_DIR/scan_results.json
-          
+          ls -al $RETIREJS_OUTPUT_DIR
 
-      - name: Check if vulnerabilities were found
+      - name: Check if the scan results file exists
         run: |
-          if [ $(jq '.data | length' $RETIREJS_OUTPUT_DIR/scan_results.json) -gt 0 ]; then
-            echo "Vulnerabilities found!"
+          if [ -f "$RETIREJS_OUTPUT_DIR/scan_results.json" ]; then
+            echo "scan_results.json found."
           else
-            echo "No vulnerabilities found."
+            echo "scan_results.json not found."
           fi
 
-
+      - name: Fail the job if vulnerabilities are found
+        run: |
+          if jq '.length > 0' $RETIREJS_OUTPUT_DIR/scan_results.json; then
+            echo "Vulnerabilities found in the project!"
+            exit 1
+          fi
 
       - name: Upload scan results as artifact
         uses: actions/upload-artifact@v4
