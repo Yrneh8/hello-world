@@ -38,10 +38,16 @@ jobs:
           retire --outputformat json --outputpath $RETIREJS_OUTPUT_DIR/scan_results.json
           cat $RETIREJS_OUTPUT_DIR/scan_results.json
 
+      - name: Print all detected vulnerabilities
+        run: |
+          echo "Detected vulnerabilities:"
+          jq '.[] | {package: .package, version: .version, url: .url, severity: .severity}' $RETIREJS_OUTPUT_DIR/scan_results.json
+
       - name: Fail the job if vulnerabilities are found
         run: |
           if jq '.length > 0' $RETIREJS_OUTPUT_DIR/scan_results.json; then
             echo "Vulnerabilities found in the project!"
+            exit 1
           fi
 
       - name: Upload scan results as artifact
@@ -49,5 +55,3 @@ jobs:
         with:
           name: retirejs-scan-results
           path: $RETIREJS_OUTPUT_DIR/scan_results.json
-
-
