@@ -8,7 +8,7 @@ password = 'myrootpassword!'  # Your MySQL password
 database = 'mydb'  # The database to connect to
 
 # Example values for 'name' and 'password' from variables
-name = "myuser"
+name = "myuser1"
 password_value = "mypassword123!"
 
 # Create a connection to the database
